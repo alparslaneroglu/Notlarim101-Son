@@ -8,7 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using Notlarim101.BusinessLayer;
 using Notlarim101.Entity;
-
+using Notlarim101.WebApp.Models;
 
 namespace Notlarim101.WebApp.Controllers
 {
@@ -56,6 +56,7 @@ namespace Notlarim101.WebApp.Controllers
             if (ModelState.IsValid)
             {
                 cm.InsertCat(category);
+                CacheHelper.RemoveCategoriesFromCache();
                 //cm.Insert(category);
                 return RedirectToAction("Index");
             }
@@ -94,6 +95,7 @@ namespace Notlarim101.WebApp.Controllers
                 cat.Description = category.Description;
 
                 cm.Update(cat);
+                CacheHelper.RemoveCategoriesFromCache();
                 return RedirectToAction("Index");
             }
             return View(category);
@@ -122,6 +124,7 @@ namespace Notlarim101.WebApp.Controllers
             Category category = cm.Find(s=>s.Id==id);
 
             cm.Delete(category);
+            CacheHelper.RemoveCategoriesFromCache();
             return RedirectToAction("Index");
         }
 
